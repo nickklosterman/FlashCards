@@ -1,0 +1,57 @@
+.container, .ui, .statrx {
+    width: 400px;
+    margin: 0 auto;
+    color: #fbfbfb;
+}
+
+.padded {
+    padding: 10px;
+}
+.question {
+background-color: #112254; 
+    min-height: 40px;
+}
+.random {
+background-color: #ff33cc; 
+}
+.remove {
+background-color: #ff3366; 
+}
+.statrx {
+//    border: 20px;
+    background-color: #112254; 
+    padding: 10px 0 10px ;
+    text-align: right;//center;
+}
+.answer-container {
+    background-color: #2243a8;
+    min-height: 180px;
+}
+
+.hidden {
+    //    visibility: hidden;
+display:none;
+}
+
+.flex-container {
+    display:flex;
+}
+
+div.ui > div > div  {
+    flex:1;
+    padding: 20px;
+    width: 50%;
+    text-align: center;
+}
+
+.previous{
+    background-color: #112254;
+}
+
+.next{
+    background-color: #3366ff;
+}
+
+.finished { 
+    background-color: #dc7a6b;
+}
