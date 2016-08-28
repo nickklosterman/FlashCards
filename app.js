@@ -19,7 +19,7 @@ document.body.addEventListener('click', handleBodyClick);
 { "question":"What does a square in the lower right corner of a nav aid tell you?", "answer":"The square in the bottom right corner indicates that the weather service HIWAS is transmitte over the VORTAC frequency."},
 { "question":"What does an underlined frequency indicate?", "answer":" The underline indicates that there is no voice capability on this frequency and only the Morse code identifier is audibly transmitted. "}
     ];
-    QAArray = shuffle(SectionA);
+    QAArray = all;//SectionB;//shuffle(SectionA);
 
     questionElement.innerHTML = QAArray[questionIndex].question;
     answerElement.innerHTML = QAArray[questionIndex].answer;
@@ -59,7 +59,12 @@ handleBodyClick = function(e) {
     } 
     if (t.className === "random") {
 	console.log("random");
-	random = Math.floor(Math.random() * QAArray.length );
+	random = questionIndex;
+	//ensure that we actually change and don't simply get the same card again.
+	while (random === questionIndex) {
+	    console.log('getting random number');
+	    random = Math.floor(Math.random() * QAArray.length );
+	}
 	console.log(random);
 	changeCards(random);
     } 
