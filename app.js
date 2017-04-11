@@ -19,11 +19,12 @@ document.body.addEventListener('click', handleBodyClick);
 { "question":"What does a square in the lower right corner of a nav aid tell you?", "answer":"The square in the bottom right corner indicates that the weather service HIWAS is transmitte over the VORTAC frequency."},
 { "question":"What does an underlined frequency indicate?", "answer":" The underline indicates that there is no voice capability on this frequency and only the Morse code identifier is audibly transmitted. "}
     ];
-    QAArray = all;//SectionB;//shuffle(SectionA);
+//    QAArray = all;//SectionB;//shuffle(SectionA);
 
     questionElement.innerHTML = QAArray[questionIndex].question;
     answerElement.innerHTML = QAArray[questionIndex].answer;
     updateStatrx();
+    timedQuestion();
 }
 
 /*
@@ -133,4 +134,59 @@ function shuffle(array) {
 
 function updateStatrx() {
     document.querySelector(".statrx").innerHTML = "Question "+(questionIndex+1) + " of "+ QAArray.length+"."; 
+}
+
+
+
+var realAnswerId, reevalAutoChangeCardsId;
+
+function killTimedQuestion() {
+    //prevent further execution
+    window.clearTimeout(revealAnswerId);
+    window.clearTimeout(revealAutoChangeCardsId);
+}
+function timedQuestion() {
+    var doublet = QAArray[questionIndex],
+	question = doublet.question,
+	answer = doublet.answer;
+    
+    questionTime = computeTimeScore(question)*500;
+    answerTime = computeTimeScore(answer)*500;
+
+
+    ///after the question timner is up, reveal the answer
+    revealAnswerId =  setTimeout(revealAnswer, questionTime);
+    //after the answer timer i sup, reveal the next question and perform the next calculation
+    revealAutoChangeCardsId = setTimeout(autoChangeCards, questionTime+answerTime);
+//handle there being no more questions. Meh just let it loop.
+}
+
+function autoChangeCards() {
+    //hack to get around SetTimeout limitations
+    changeCards(questionIndex+1);
+    timedQuestion();
+}
+function revealAnswer() {
+    answerElement.classList.remove('hidden');
+}
+
+function computeTimeScore(string) {
+    var split = string.split(' '),
+	timeScore = 0,
+	stringLength,
+	coutner;
+
+    for (counter = 0 ; counter < split.length; counter++) {
+	stringLength = split[counter].length;
+	if( stringLength < 5 ) {
+	    timeScore +=1;
+	} else if ( stringLength < 10 ) {
+	    timeScore += 1.25;
+	} else if ( stringLength < 20 ) {
+	    timeScore += 1.333;
+	} else {
+	    timeScore += 1.5;
+	}
+    }
+    return timeScore;
 }
