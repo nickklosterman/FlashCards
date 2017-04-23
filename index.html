@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="style.css" /> 
   </head>
   
-  <body>
-<header></header>
-<div id="menu">
-<label><input type="checkbox">Randomize</label>
-To make it configurable, read a config.json that lists the various csv/json question files. Ingest and populate a multi-select drop down. On selection append/assign to onblur, then load those files and create the array of questions and set that to our QAArray.
-<input type="checkbox">
-</div>
+  <body class="largeScreen">
+    <header></header>
+    <div id="menu">
+      <label><input type="checkbox">Randomize</label>
+      To make it configurable, read a config.json that lists the various csv/json question files. Ingest and populate a multi-select drop down. On selection append/assign to onblur, then load those files and create the array of questions and set that to our QAArray.
+      <input type="checkbox">
+    </div>
     <div class="container">
       <div id="question" class="question padded"></div>
       <div id="answer-container" class="answer-container">
@@ -26,11 +26,14 @@ To make it configurable, read a config.json that lists the various csv/json ques
 	<div class="next">Next</div>
       </div>
       <div class="flex-container">
-<!--	<button class="randomize">Randomize stack</button>
-	<button class="random">Random flashcard</button> 
-	<button class="remove">Remove flashcard</button>
--->
+	<!--	<button class="randomize">Randomize stack</button>
+		<button class="random">Random flashcard</button> 
+		<button class="remove">Remove flashcard</button>
+		-->
 	<div class="remove">Remove flashcard</div>
+      </div>
+      <div class="flex-container">
+	<div id="autoAdvance" class="auto stop">Start Auto Question Advance-----</div>
       </div>
     </div>
     <div class="statrx">
@@ -89,30 +92,30 @@ To make it configurable, read a config.json that lists the various csv/json ques
 
 </html>
 <!--
-resources:
-http://codepo8.github.io/tinderesque/demos/cuter/index.html
-https://www.christianheilmann.com/2015/09/06/tinderesque-building-a-tinder-like-interface-with-css-animations-and-vanilla-js-justcode/
+    resources:
+    http://codepo8.github.io/tinderesque/demos/cuter/index.html
+    https://www.christianheilmann.com/2015/09/06/tinderesque-building-a-tinder-like-interface-with-css-animations-and-vanilla-js-justcode/
 
-http://carlsednaoui.github.io/ouicards/
-https://github.com/carlsednaoui/ouicards
-http://carlsednaoui.github.io/ouicards/live-examples/index.html
+    http://carlsednaoui.github.io/ouicards/
+    https://github.com/carlsednaoui/ouicards
+    http://carlsednaoui.github.io/ouicards/live-examples/index.html
 
-https://github.com/eschwartz/flash-cards seems a bit overkill w BE dbase etc. 
+    https://github.com/eschwartz/flash-cards seems a bit overkill w BE dbase etc. 
 
-https://github.com/thormartin91/flashcard
+    https://github.com/thormartin91/flashcard
 
-https://github.com/kradalby/flashcards
+    https://github.com/kradalby/flashcards
 
-http://blog.logiticks.com/flashcards-using-angularjs/
+    http://blog.logiticks.com/flashcards-using-angularjs/
 
-https://github.com/fattarsi/flashcards
-http://fattarsi.com/html5/flashcards/
+    https://github.com/fattarsi/flashcards
+    http://fattarsi.com/html5/flashcards/
 
-http://stackoverflow.com/questions/25707247/javascript-flashcard-studying-app
-http://codereview.stackexchange.com/questions/78278/simplistic-flash-card-web-app
-http://stackoverflow.com/questions/28925816/building-a-jquery-flashcard-app-using-array-to-store-questions-and-answers
-https://jsfiddle.net/inthevidual/kLyxped4/
-https://github.com/curtisblackwell/flash_cards
+    http://stackoverflow.com/questions/25707247/javascript-flashcard-studying-app
+    http://codereview.stackexchange.com/questions/78278/simplistic-flash-card-web-app
+    http://stackoverflow.com/questions/28925816/building-a-jquery-flashcard-app-using-array-to-store-questions-and-answers
+    https://jsfiddle.net/inthevidual/kLyxped4/
+    https://github.com/curtisblackwell/flash_cards
 
-https://github.com/cadebward/flashcards React
--->
+    https://github.com/cadebward/flashcards React
+  -->

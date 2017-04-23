@@ -55,3 +55,19 @@ div.ui > div > div  {
 .finished { 
     background-color: #dc7a6b;
 }
+
+.auto {
+    /*    background-color: #ffcc33;*/
+    background-color: #33ff66;
+}
+
+.auto.stop {
+        background-color: #ffcc33;
+}
+
+.largeScreen .container, .largeScreen .ui, .largeScreen .statrx {
+    width: 80%;
+    margin: 0 auto;
+    color: #fbfbfb;
+    font-size: 300%;
+}

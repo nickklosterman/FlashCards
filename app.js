@@ -1,7 +1,9 @@
 var questionElement = document.getElementById("question"),
 answerElement = document.getElementById("answer"),
 QAArray, 
-questionIndex = 0;
+    questionIndex = 0,
+    revealAnswerId = null,
+    revealAutoChangeCardsId = null    ;
 
 window.onload = function () {
 //document. = function () {
@@ -12,10 +14,10 @@ window.onload = function () {
 function init() {
 document.body.addEventListener('click', handleBodyClick);
     QAArray = [
-{ "question":"What is the minimum height you can fly over a special conservation area?", "answer":" You should fly no lower than 2000ft AGL over a special conservation are indicated by the blue dots bounded by a solid blue line on a sectional. <img src='http://www.djinnius.com/fav.ico'>"},
+{ "question":"What is the minimum height you can fly over a special conservation area?", "answer":" You should fly no lower than 2000ft AGL over a special conservation area indicated by the blue dots bounded by a solid blue line on a sectional. <img src='http://www.djinnius.com/fav.ico'>"},
 { "question":"What does a star in the runway layout mean?", "answer":" A star indicates a rotating beacon is in operation from sunset to sunrise."},
 { "question":"What do points around a runway mean?", "answer":" Tick marks indicate that fuel is available and the field is attended during normal working hours. "},
-{ "question":"[How are controlled airports denoted on a VFR sectional(hint think color)]?", "answer":"Controlled airports are colored blue. Uncontrolled are colore magenta. Surprisingly, KSGH is uncontrolled. "},
+{ "question":"[How are controlled airports denoted on a VFR sectional(hint think color)]?", "answer":"Controlled airports are colored blue. Uncontrolled are colored magenta. Surprisingly, KSGH is uncontrolled. "},
 { "question":"What does a square in the lower right corner of a nav aid tell you?", "answer":"The square in the bottom right corner indicates that the weather service HIWAS is transmitte over the VORTAC frequency."},
 { "question":"What does an underlined frequency indicate?", "answer":" The underline indicates that there is no voice capability on this frequency and only the Morse code identifier is audibly transmitted. "}
     ];
@@ -24,9 +26,26 @@ document.body.addEventListener('click', handleBodyClick);
     questionElement.innerHTML = QAArray[questionIndex].question;
     answerElement.innerHTML = QAArray[questionIndex].answer;
     updateStatrx();
-    timedQuestion();
+    document.getElementById("autoAdvance").addEventListener("click",autoAdvanceClick);
+    //    timedQuestion();
+    document.getElementById("autoAdvance").click();
 }
 
+function autoAdvanceClick(e) {
+    var t = e.target,
+	classes = t.classList;
+    if (t.className.indexOf("stop") === -1) {
+	timedQuestion();
+	t.innerHTML = "Stop Auto Question Advance";
+	t.classList.add("stop");
+    } else {
+	killTimedQuestion();
+	t.innerHTML = "Start Auto Question Advance";
+	t.classList.remove("stop");
+    }
+  
+    
+}
 /*
 questionElement.addEventListener("click", function() {
 //    console.log("q clicked");
@@ -43,6 +62,7 @@ handleBodyClick = function(e) {
     var t = e.target,
     random;
     console.log(t.className);
+    console.log(e.target);
     if (t.className === "next" || 
 	( t.className.indexOf("answer") > -1 &&
 	  t.className.indexOf("answer-container") === -1 &&
@@ -83,11 +103,14 @@ handleBodyClick = function(e) {
 	removeFlashcard();
     }
 //    console.log(t.className.indexOf("question")  );
-
+    if (e.target.nodeName === "BODY" ) {
+	t.classList.toggle("largeScreen");
+    }
+    
 };
 
 function removeFlashcard() {
-    QAArray.splice(questionIndex,1);
+    QAArray.splice(questionIndex, 1);
     changeCards(questionIndex);
 }
 
@@ -95,9 +118,15 @@ function changeCards(index) {
     if (index >= QAArray.length) {
 	index = 0
     } else if ( index < 0 ) {
-	index = QAArray.length -1;
+	index = QAArray.length - 1;
     }
 
+    //if we clicked to advance while autoadvancing, reset the timers
+    if ( revealAnswerId != null ) {
+	killTimedQuestion();
+	timedQuestion();
+    }
+    
     if (QAArray.length > 0) {
     questionIndex = index;
     console.log(questionIndex+" "+QAArray.length);
@@ -136,14 +165,12 @@ function updateStatrx() {
     document.querySelector(".statrx").innerHTML = "Question "+(questionIndex+1) + " of "+ QAArray.length+"."; 
 }
 
-
-
-var realAnswerId, reevalAutoChangeCardsId;
-
 function killTimedQuestion() {
     //prevent further execution
     window.clearTimeout(revealAnswerId);
     window.clearTimeout(revealAutoChangeCardsId);
+    revealAnswerId = null;
+    revealAutoChangeCardsId = null;
 }
 function timedQuestion() {
     var doublet = QAArray[questionIndex],
