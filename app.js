@@ -13,7 +13,7 @@ window.onload = function () {
 
 function init() {
 document.body.addEventListener('click', handleBodyClick);
-    QAArray = [
+    QAArray = questions =  [
 { "question":"What is the minimum height you can fly over a special conservation area?", "answer":" You should fly no lower than 2000ft AGL over a special conservation area indicated by the blue dots bounded by a solid blue line on a sectional. <img src='http://www.djinnius.com/fav.ico'>"},
 { "question":"What does a star in the runway layout mean?", "answer":" A star indicates a rotating beacon is in operation from sunset to sunrise."},
 { "question":"What do points around a runway mean?", "answer":" Tick marks indicate that fuel is available and the field is attended during normal working hours. "},
@@ -23,12 +23,22 @@ document.body.addEventListener('click', handleBodyClick);
     ];
 //    QAArray = all;//SectionB;//shuffle(SectionA);
 
-    questionElement.innerHTML = QAArray[questionIndex].question;
-    answerElement.innerHTML = QAArray[questionIndex].answer;
-    updateStatrx();
+    restartQuestions();
     document.getElementById("autoAdvance").addEventListener("click",autoAdvanceClick);
     //    timedQuestion();
     document.getElementById("autoAdvance").click();
+}
+
+function closeMenu() {
+       document.getElementById("menuToggle").click();
+}
+
+function restartQuestions() {
+    questionIndex = 0;
+    questionElement.innerHTML = QAArray[questionIndex].question;
+    answerElement.innerHTML = QAArray[questionIndex].answer;
+    updateStatrx();
+ 
 }
 
 function autoAdvanceClick(e) {
@@ -107,6 +117,28 @@ handleBodyClick = function(e) {
 	t.classList.toggle("largeScreen");
     }
     
+    if (e.target.id) {
+	switch (e.target.id) {
+	case "one":
+	    QAArray = questions;
+	    restartQuestions();
+	    killTimedQuestion();
+	    closeMenu();
+	    break;
+	case "two":
+	    QAArray = aim;
+	    restartQuestions();
+	    killTimedQuestion();
+	    closeMenu();
+	    break;
+	case "three":
+	    QAArray = ifr_stage_1;
+	    restartQuestions();
+	    killTimedQuestion();
+	    closeMenu();
+	    break;
+	}
+    }
 };
 
 function removeFlashcard() {
@@ -128,14 +160,14 @@ function changeCards(index) {
     }
     
     if (QAArray.length > 0) {
-    questionIndex = index;
-    console.log(questionIndex+" "+QAArray.length);
-    questionElement.innerHTML = QAArray[questionIndex].question;
-    //ensure the answer is always hidden when we get a new question.
-    answerElement.classList.add('hidden');    
-    answerElement.innerHTML = QAArray[questionIndex].answer;
+	questionIndex = index;
+	console.log(questionIndex+" "+QAArray.length);
+	questionElement.innerHTML = QAArray[questionIndex].question;
+	//ensure the answer is always hidden when we get a new question.
+	answerElement.classList.add('hidden');    
+	answerElement.innerHTML = QAArray[questionIndex].answer;
     } else {
-    questionElement.innerHTML = "You've mastered all the questions. There are no more questions. Please start over.";
+	questionElement.innerHTML = "You've mastered all the questions. There are no more questions. Please start over.";
 	questionElement.classList.add('finished');
     }
     updateStatrx();
@@ -176,14 +208,15 @@ function timedQuestion() {
     var doublet = QAArray[questionIndex],
 	question = doublet.question,
 	answer = doublet.answer;
-    
-    questionTime = computeTimeScore(question)*500;
-    answerTime = computeTimeScore(answer)*500;
+
+    //set a min time that contents will be displayed
+    questionTime = Math.max(computeTimeScore(question)*500, 1500);
+    answerTime = Math.max(computeTimeScore(answer)*500,2500);
 
 
     ///after the question timner is up, reveal the answer
     revealAnswerId =  setTimeout(revealAnswer, questionTime);
-    //after the answer timer i sup, reveal the next question and perform the next calculation
+    //after the answer timer is up, reveal the next question and perform the next calculation
     revealAutoChangeCardsId = setTimeout(autoChangeCards, questionTime+answerTime);
 //handle there being no more questions. Meh just let it loop.
 }
