@@ -1,9 +1,10 @@
 var questionElement = document.getElementById("question"),
 answerElement = document.getElementById("answer"),
-QAArray, 
+    QAArray, 
     questionIndex = 0,
     revealAnswerId = null,
-    revealAutoChangeCardsId = null    ;
+    revealAutoChangeCardsId = null,
+    autoAdvanceState = false;
 
 window.onload = function () {
 //document. = function () {
@@ -45,6 +46,7 @@ function autoAdvanceClick(e) {
     var t = e.target,
 	classes = t.classList;
     if (t.className.indexOf("stop") === -1) {
+	autoAdvanceState = true;
 	timedQuestion();
 	t.innerHTML = "Stop Auto Question Advance";
 	t.classList.add("stop");
@@ -52,6 +54,7 @@ function autoAdvanceClick(e) {
 	killTimedQuestion();
 	t.innerHTML = "Start Auto Question Advance";
 	t.classList.remove("stop");
+	autoAdvanceState = false;
     }
   
     
@@ -118,7 +121,8 @@ handleBodyClick = function(e) {
     }
     
     if (e.target.id) {
-	switch (e.target.id) {
+	console.log("do I need to change autoadvance here? or check it ")
+	switch (e.target.id) { //i think there is a simpler way to do this. have ids in the lis and just read those
 	case "one":
 	    QAArray = questions;
 	    restartQuestions();
@@ -133,6 +137,13 @@ handleBodyClick = function(e) {
 	    break;
 	case "three":
 	    QAArray = ifr_stage_1;
+	    restartQuestions();
+	    killTimedQuestion();
+	    closeMenu();
+	    break;
+	
+	case "four":
+	    QAArray = all;
 	    restartQuestions();
 	    killTimedQuestion();
 	    closeMenu();
@@ -205,6 +216,9 @@ function killTimedQuestion() {
     revealAutoChangeCardsId = null;
 }
 function timedQuestion() {
+    if (!answerElement.classList.contains("hidden")) {
+	changeCards(questionIndex+=1);
+    }
     var doublet = QAArray[questionIndex],
 	question = doublet.question,
 	answer = doublet.answer;
@@ -213,18 +227,21 @@ function timedQuestion() {
     questionTime = Math.max(computeTimeScore(question)*500, 1500);
     answerTime = Math.max(computeTimeScore(answer)*500,2500);
 
-
+    if (revealAnswerId === null) {
     ///after the question timner is up, reveal the answer
     revealAnswerId =  setTimeout(revealAnswer, questionTime);
     //after the answer timer is up, reveal the next question and perform the next calculation
     revealAutoChangeCardsId = setTimeout(autoChangeCards, questionTime+answerTime);
-//handle there being no more questions. Meh just let it loop.
+	//handle there being no more questions. Meh just let it loop.
+    }
 }
 
 function autoChangeCards() {
     //hack to get around SetTimeout limitations
+    if (autoAdvanceState) {
     changeCards(questionIndex+1);
-    timedQuestion();
+	timedQuestion();
+    }
 }
 function revealAnswer() {
     answerElement.classList.remove('hidden');
