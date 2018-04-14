@@ -1,27 +1,34 @@
+@media screen and (min-width: 1920px) {
+    
+    .answer-container {
+	height: 400px;
+    }    
+}
+
+/*
 .container, .ui, .statrx {
-    width: 400px;
+/*width: 400px;* /
     margin: 0 auto;
     color: #fbfbfb;
 }
-
+*/
 .padded {
     padding: 10px;
 }
 .question {
-background-color: #112254; 
+    background-color: #112254; 
     min-height: 40px;
 }
 .random {
-background-color: #ff33cc; 
+    background-color: #ff33cc; 
 }
 .remove {
-background-color: #ff3366; 
+    background-color: #ff3366; 
 }
 .statrx {
-//    border: 20px;
     background-color: #112254; 
     padding: 10px 0 10px ;
-    text-align: right;//center;
+    text-align: right;
 }
 .answer-container {
     background-color: #2243a8;
@@ -29,19 +36,35 @@ background-color: #ff3366;
 }
 
 .hidden {
-    //    visibility: hidden;
-display:none;
+    display:none;
 }
 
 .flex-container {
     display:flex;
 }
 
-div.ui > div > div  {
-    flex:1;
+@media (min-width: 501px){
+    div.ui > div > div  {
+	flex:1;
     padding: 20px;
     width: 50%;
     text-align: center;
+    }
+    div.container > div {
+	    padding: 20px;
+    }
+}
+
+@media (max-width: 500px) {
+    div.ui > div > div  {
+	flex:1;
+	padding: 10px;
+	width: 50%;
+	text-align: center;
+    }
+    div.container > div  {
+	padding: 10px;
+    }
 }
 
 .previous{
@@ -62,36 +85,49 @@ div.ui > div > div  {
 }
 
 .auto.stop {
-        background-color: #ffcc33;
+    background-color: #ffcc33;
 }
 
-.largeScreen .container, .largeScreen .ui, .largeScreen .statrx {
-    width: 80%;
-    margin: 0 auto;
-    color: #fbfbfb;
-    font-size: 300%;
+/* This really should be some sort of media query instead*/
+@media (min-width: 501px){
+    .container,  .ui,  .statrx {  /* need to consolidate and simplify these styles  */
+				 width: 97.5%;
+				 margin: 0 auto;
+				 color: #fbfbfb;
+				 font-size: 1em;
+			       }    
 }
+
+@media (max-width: 500px){
+    .container,  .ui,  .statrx {
+	width: 90%;
+	margin: 0 auto;
+	color: #fbfbfb;
+	font-size: 1em;
+    }    
+}
+
 
 
 /*   mneu items  */
- * { padding: 0; margin: 0; }
+* { padding: 0; margin: 0; }
 body { font-family: sans-serif; }
 a { text-decoration: none; color: #00A5CC; }
 li { list-style-type: none; }
-
+/*
 header { 
 	width: 100%; 
 	height: 50px; 
 	margin: auto;
 	border-bottom: 1px solid #EEE;
-}
+}*/
 
 nav { width: 100%; text-align: center; }
 nav a { 
-	display: block; 
-	padding: 15px 0;
-	border-bottom: 1px solid #C3AA6E;
-	color: #F0EADC;
+    display: block; 
+    padding: 15px 0;
+    border-bottom: 1px solid #C3AA6E;
+    color: #F0EADC;
 }
 nav a:hover { background: #E5DAC0; color: #FFF; }
 nav li:last-child a { border-bottom: none; }
@@ -99,26 +135,25 @@ nav li:last-child a { border-bottom: none; }
 /*-----------------------------------------*/
 
 .menu {
-	width: 240px;
-	height: 100%;
-	position: absolute;
-	background: #3366ff;
-	left: -240px;
-	transition: all .3s ease-in-out;
-	-webkit-transition: all .3s ease-in-out;
-	-moz-transition: all .3s ease-in-out;
-	-ms-transition: all .3s ease-in-out;
-	-o-transition: all .3s ease-in-out;
-	
+    width: 240px;
+    height: 100%;
+    position: absolute;
+    background: #3366ff;
+    left: -240px;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+    
 }
 .menu-icon {
-	padding: 10px 20px;
-	background: #ff33cc;
-	color: #3366ff;
-	cursor: pointer;
-	//float: right;
-	margin: 26px 6px 10px 10px;
-	border-radius: 5px;
+    padding: 10px 20px;
+    background: #ff33cc;
+    color: #3366ff;
+    cursor: pointer;
+    margin: 26px 6px 10px 10px;
+    border-radius: 5px;
 }
 #menuToggle { display: none;  }
 

@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css" /> 
   </head>
   
-  <body class="largeScreen">
+  <body class="">
     <input type="checkbox" id="menuToggle">
     <label for="menuToggle" class="menu-icon">&#9776;</label>
     <nav class="menu">
@@ -18,11 +18,11 @@
       </ul>
       </nav>
     <header></header>
-    <div id="menu">
+<!--    <div id="menu">
       <label><input type="checkbox">Randomize</label>
       To make it configurable, read a config.json that lists the various csv/json question files. Ingest and populate a multi-select drop down. On selection append/assign to onblur, then load those files and create the array of questions and set that to our QAArray.
       <input type="checkbox">
-    </div>
+    </div> -->
     <div class="container">
       <div id="question" class="question padded"></div>
       <div id="answer-container" class="answer-container">
@@ -46,7 +46,7 @@
 	<div id="autoAdvance" class="auto stop">Start Auto Question Advance-----</div>
       </div>
     </div>
-    <div class="statrx">
+    <div class="statrx randomize">
     </div>    
     <div class="ideas-container">
       <div class="ideas hidden">
@@ -70,7 +70,6 @@
   
   <script src="app.js"></script>
   <script src="aim.json"></script>
-  <script src="ifr-stage-1.json"></script>
   
   <script src="questions/SectionA.json"></script>
   <script src="questions/SectionAA.json"></script>
@@ -101,6 +100,8 @@
   <script src="questions/SectionZ.json"></script>
   <script src="questions/IFROralExamFlightPlanning.json"></script>
   <script src="questions/IFROralExamDeparture.json"></script>
+  <script src="questions/IFRQuizlet_243722_und-221-final-exam-review-flash-cards.json"></script>
+  <script src="questions/IFRQuizlet_156312_ifr-stage-1-flash-cards.json"></script>
   <script src="questions/all.json"></script>
 
 </html>

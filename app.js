@@ -22,7 +22,7 @@ document.body.addEventListener('click', handleBodyClick);
 { "question":"What does a square in the lower right corner of a nav aid tell you?", "answer":"The square in the bottom right corner indicates that the weather service HIWAS is transmitte over the VORTAC frequency."},
 { "question":"What does an underlined frequency indicate?", "answer":" The underline indicates that there is no voice capability on this frequency and only the Morse code identifier is audibly transmitted. "}
     ];
-//    QAArray = all;//SectionB;//shuffle(SectionA);
+    QAArray = iq;//all;//SectionB;//shuffle(SectionA);
 
     restartQuestions();
     document.getElementById("autoAdvance").addEventListener("click",autoAdvanceClick);
@@ -43,6 +43,7 @@ function restartQuestions() {
 }
 
 function autoAdvanceClick(e) {
+    // I was thinking of hiding the other buttons if the aut advance has been activated but they really don't get in the way so Idon't see a need to do that.
     var t = e.target,
 	classes = t.classList;
     if (t.className.indexOf("stop") === -1) {
@@ -87,9 +88,11 @@ handleBodyClick = function(e) {
 	console.log("prev");
 	changeCards(questionIndex-1);
     }  
-    if (t.className === "randomize") {
+    //    if (t.className === "randomize") {
+    if (t.className.indexOf("randomize") > -1 ) {
 	console.log("rndmze");
 	QAArray = shuffle(QAArray);
+	changeCards(questionIndex);
     } 
     if (t.className === "random") {
 	console.log("random");
@@ -101,13 +104,14 @@ handleBodyClick = function(e) {
 	}
 	console.log(random);
 	changeCards(random);
-    } 
+    }
+
     if (t.className.indexOf("question") > -1 || 
 //	t.className.indexOf("answer") > -1 &&
 	t.className.indexOf("answer-container") > -1 ) {
 	console.log("qa");
 	answerElement.classList.toggle('hidden');
-    } 
+    }
     if (t.className.indexOf("ideas") > -1 ) {
 	console.log("id");
 	answerElement.classList.toggle('hidden');
@@ -115,16 +119,17 @@ handleBodyClick = function(e) {
     if (t.className === "remove" ) {
 	removeFlashcard();
     }
+    /*
 //    console.log(t.className.indexOf("question")  );
     if (e.target.nodeName === "BODY" ) {
 	t.classList.toggle("largeScreen");
-    }
+    }  now handled by media queries */
     
     if (e.target.id) {
 	console.log("do I need to change autoadvance here? or check it ")
 	switch (e.target.id) { //i think there is a simpler way to do this. have ids in the lis and just read those
 	case "one":
-	    QAArray = questions;
+	    QAArray = IFROralExamDeparture;//questions;
 	    restartQuestions();
 	    killTimedQuestion();
 	    closeMenu();
@@ -224,7 +229,7 @@ function timedQuestion() {
 	answer = doublet.answer;
 
     //set a min time that contents will be displayed
-    questionTime = Math.max(computeTimeScore(question)*500, 1500);
+    questionTime = Math.max(computeTimeScore(question)*500, 2500);
     answerTime = Math.max(computeTimeScore(answer)*500,2500);
 
     if (revealAnswerId === null) {
